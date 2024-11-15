@@ -8,20 +8,23 @@ const CardContainer = styled.div`
   margin: 20px;
 `;
 
-const ImageCard = styled.div`
-  width: 200PX;
-  height: 200px;
-  background-color: #eee;
-  border-radius: 10px;
-`;
+// const ImageCard = ({image}) => (
+//     return <img src={image}></img>
+// )
 
-const ImageGrid = () => {
+// styled.div`
+//   width: 200PX;
+//   height: 200px;
+//   background-color: #eee;
+//   border-radius: 10px;
+// `;
+
+const ImageGrid = ({images}) => {
   return (
     <CardContainer>
-      <ImageCard />
-      <ImageCard />
-      <ImageCard />
-      <ImageCard />
+      {images.map((image, index) => (
+        <img key={index} src={image} alt={image}/>
+      ))}
     </CardContainer>
   );
 };
