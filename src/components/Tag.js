@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const TagContainer = styled.div`
   display: flex;
@@ -30,13 +30,17 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const TagList = () => {
+const updateTags = () => {
+  console.log("updating tags");
+};
+
+const TagList = ({ tags }) => {
   return (
     <TagContainer>
-      <Tag label="female" />
-      <Tag label="elder" />
-      <Tag label="informally dressed" />
-      <Button />
+      {tags.map((tag, index) => (
+        <TagButton key={index}>{tag}</TagButton>
+      ))}
+    <Button/>
     </TagContainer>
   );
 };

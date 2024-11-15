@@ -1,5 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from "react";
+// import Button from './Button';
+import styled from "styled-components";
 
 const PromptContainer = styled.div`
   display: flex;
@@ -26,12 +27,38 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const Prompt = () => {
+const sendPrompt = () => {
+  console.log("sending prompt");
+};
+
+const Prompt = ({ onGenerate }) => {
+  const [prompt, setPrompt] = useState("");
+
+  const handleButtonClick = () => {
+    if (prompt) {
+      onGenerate(prompt);
+    }
+  };
+
   return (
     <PromptContainer>
-      <PromptInput type="text" placeholder="a successful tech company CEO" />
-      <Button />
+      <PromptInput
+        type="text"
+        value={prompt}
+        onChange={(e) => setPrompt(e.target.value)}
+        placeholder="a successful tech company CEO"
+      />
+      <Button onClick={handleButtonClick} />
     </PromptContainer>
+    //   <div>
+    //     <input
+    //       type="text"
+    //       value={prompt}
+    //       onChange={(e) => setPrompt(e.target.value)}
+    //       placeholder="a successful tech company CEO"
+    //     />
+    //     <Button onClick={handleButtonClick} />
+    //   </div>
   );
 };
 
