@@ -18,3 +18,11 @@ export const generateImages = (prompt) => {
     "https://via.placeholder.com/150?text=Image+4",
   ];
 };
+
+//
+//  find a new subset of tags different from tags
+//
+export const changeTags =  (tags) => {
+  console.log("changing tags ...");
+  return []
+}
