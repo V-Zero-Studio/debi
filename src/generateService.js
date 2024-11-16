@@ -22,7 +22,14 @@ export const generateImages = (prompt) => {
 //
 //  find a new subset of tags different from tags
 //
-export const changeTags =  (tags) => {
+export const changeTags = (tags) => {
   console.log("changing tags ...");
-  return []
-}
+  return [];
+};
+
+//
+//
+//
+export const insertToPrompt = (tag) => {
+  console.log("inserting", tag, "into prompt")
+};

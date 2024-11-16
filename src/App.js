@@ -3,7 +3,7 @@ import './App.css';
 import PromptInput from './components/PromptInput';
 import TagList from './components/Tag';
 import ImageGrid from './components/ImageCard';
-import { generateTags, generateImages, changeTags } from './generateService';
+import { generateTags, generateImages, changeTags, insertToPrompt } from './generateService';
 
 function App() {
   const [tags, setTags] = useState(['female', 'elder', 'informally dressed']); // initial tags
@@ -25,7 +25,7 @@ function App() {
   return (
     <div className="App">
       <PromptInput onGenerate={handleGenerate} />
-      <TagList tags={tags} onUpdate={handleUpdate} />
+      <TagList tags={tags} onUpdate={handleUpdate} onTag={insertToPrompt}/>
       <ImageGrid images={images} />
     </div>
   );

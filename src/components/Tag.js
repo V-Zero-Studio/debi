@@ -30,15 +30,19 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const TagList = ({ tags, onUpdate }) => {
+const TagList = ({ tags, onUpdate, onTag}) => {
     const handleButtonClick = () => {
         onUpdate(tags)
     };
 
+    const handleTagClick = (e) => {
+        onTag(e.target.getAttribute("tag"))
+    }
+
   return (
     <TagContainer>
       {tags.map((tag, index) => (
-        <TagButton key={index}>{tag}</TagButton>
+        <TagButton key={index} tag={tag} onClick={handleTagClick}>{tag}</TagButton>
       ))}
     <Button onClick={handleButtonClick}/>
     </TagContainer>
