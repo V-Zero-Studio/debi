@@ -27,18 +27,20 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const sendPrompt = () => {
-  console.log("sending prompt");
-};
-
 const Prompt = ({ onGenerate }) => {
   const [prompt, setPrompt] = useState("");
 
-  const handleButtonClick = () => {
+  const sendPrompt = () => {
     if (prompt) {
       onGenerate(prompt);
     }
   };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+        sendPrompt()
+    }
+  }
 
   return (
     <PromptContainer>
@@ -47,8 +49,9 @@ const Prompt = ({ onGenerate }) => {
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
         placeholder="a successful tech company CEO"
+        onKeyDown={handleKeyDown}
       />
-      <Button onClick={handleButtonClick} />
+      <Button onClick={sendPrompt} />
     </PromptContainer>
     //   <div>
     //     <input
