@@ -29,18 +29,21 @@ const Button = styled.button`
 
 const Prompt = ({ onGenerate }) => {
   const [prompt, setPrompt] = useState("");
+  const [isDisabled, setIsDisabled] = useState(false);
 
-  const sendPrompt = () => {
+  const sendPrompt = async () => {
     if (prompt) {
-      onGenerate(prompt);
+      setIsDisabled(true);
+      await onGenerate(prompt);
+      setIsDisabled(false);
     }
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-        sendPrompt()
+    if (e.key === "Enter") {
+      sendPrompt();
     }
-  }
+  };
 
   return (
     <PromptContainer>
@@ -48,20 +51,12 @@ const Prompt = ({ onGenerate }) => {
         type="text"
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
-        placeholder="a successful tech company CEO"
+        placeholder="Describe the image you want to generate"
         onKeyDown={handleKeyDown}
+        disabled={isDisabled}
       />
       <Button onClick={sendPrompt} />
     </PromptContainer>
-    //   <div>
-    //     <input
-    //       type="text"
-    //       value={prompt}
-    //       onChange={(e) => setPrompt(e.target.value)}
-    //       placeholder="a successful tech company CEO"
-    //     />
-    //     <Button onClick={handleButtonClick} />
-    //   </div>
   );
 };
 
