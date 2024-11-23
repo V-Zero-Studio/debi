@@ -19,7 +19,7 @@ function App() {
     const newImages = await generateImages(prompt);
     setImages(newImages);
 
-    const newTags = await generateTags(newImages);
+    const newTags = await generateTags(prompt, newImages);
     setTags(newTags);
   };
 

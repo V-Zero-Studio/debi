@@ -38,9 +38,9 @@ export const generateImages = async (prompt) => {
 //
 //
 // finally, return a list of suggested attributes as keywords/phases formatted as follows: {keyword/phase, keyword/phase, ... keyword/phase}
-export const generateTags = async (imgUrls) => {
-  const textPrompt =
-    "detect as many as possible attributes that the images have in common and, for each common attribute, suggest a different value.\n\n for example: if identifying that all images show 'male' as the gender attribute, you can suggest 'female' or 'non-binary' as a different value, and return JavaScript code of an array [{\"attribute\": \"gender\", \"common\": \"male\", \"suggestion\": [\"female\", \"non-binary\"]}]. only return the JavaScript code. do not include other texts or markdown code like '```javascript'";
+export const generateTags = async (prompt, imgUrls) => {
+  const textPrompt = "the prompt that generates these images is \"" + prompt + "\". " +
+    "detect as many as possible attributes that these images have in common (but not specified in the prompt) and, for each common attribute, suggest a different value.\n\n for example: if identifying that all images show 'male' as the gender attribute, you can suggest 'female' or 'non-binary' as a different value, and return JavaScript code of an array [{\"attribute\": \"gender\", \"common\": \"male\", \"suggestion\": [\"female\", \"non-binary\"]}]. only return the JavaScript code. do not include other texts or markdown code like '```javascript'";
   const messageContents = [
     {
       type: "text",
@@ -63,16 +63,17 @@ export const generateTags = async (imgUrls) => {
     });
 
     const result = response.choices[0].message.content;
-    console.log(result);
+    // console.log(result);
+    const tagList = JSON.parse(result);
+    console.log(tagList);
 
-    const tags = JSON.parse(result);
-    console.log(tags);
+    const tags = []
+    tagList.map((tagInfo) => {tags.push(...tagInfo.suggestion)})
+    return tags
   } catch (error) {
     console.error("Error captioning images:", error);
     return [];
   }
-
-  return ["creative", "experienced", "dynamic"];
 };
 
 //
