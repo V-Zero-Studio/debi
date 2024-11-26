@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, forwardRef, useImperativeHandle } from "react";
 // import Button from './Button';
 import styled from "styled-components";
 
@@ -27,7 +27,7 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const Prompt = ({ onGenerate }) => {
+const Prompt = forwardRef(({ onGenerate }, ref) => {
   const [prompt, setPrompt] = useState("");
   const [isDisabled, setIsDisabled] = useState(false);
 
@@ -45,6 +45,14 @@ const Prompt = ({ onGenerate }) => {
     }
   };
 
+  const insertTagIntoPrompt = (tag) => {
+    console.log("inserting into prompt: ", tag);
+  }
+  
+  useImperativeHandle(ref, () => ({
+    insertTagIntoPrompt,
+  }));
+
   return (
     <PromptContainer>
       <PromptInput
@@ -58,6 +66,6 @@ const Prompt = ({ onGenerate }) => {
       <Button onClick={sendPrompt} />
     </PromptContainer>
   );
-};
+});
 
 export default Prompt;

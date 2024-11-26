@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./App.css";
 import PromptInput from "./components/PromptInput";
 import TagList from "./components/Tag";
@@ -13,6 +13,7 @@ import {
 function App() {
   const [tags, setTags] = useState(["female", "elder", "informally dressed"]); // initial tags
   const [images, setImages] = useState([]); // initial images
+  const promptInput = useRef(null);
 
   // Function to generate new tags and images based on the prompt
   const handleGenerate = async (prompt) => {
@@ -28,10 +29,16 @@ function App() {
     setTags(newTags);
   };
 
+  const handleTagClick = (tag) => {
+    if (promptInput.current) {
+      promptInput.current.insertTagIntoPrompt(tag);
+    }
+  };
+
   return (
     <div className="App">
-      <PromptInput onGenerate={handleGenerate} />
-      <TagList tags={tags} onUpdate={handleUpdate} onTag={insertToPrompt} />
+      <PromptInput ref={promptInput} onGenerate={handleGenerate} />
+      <TagList tags={tags} onUpdate={handleUpdate} onTag={handleTagClick} />
       <ImageGrid images={images} />
     </div>
   );
