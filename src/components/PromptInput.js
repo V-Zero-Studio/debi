@@ -47,6 +47,7 @@ const Prompt = forwardRef(({ onGenerate }, ref) => {
 
   const insertTagIntoPrompt = (tag) => {
     console.log("inserting into prompt: ", tag);
+    setPrompt(prompt + ", " + tag);
   }
   
   useImperativeHandle(ref, () => ({

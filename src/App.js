@@ -7,7 +7,6 @@ import {
   generateTags,
   generateImages,
   changeTags,
-  insertToPrompt,
 } from "./generateService";
 
 function App() {
