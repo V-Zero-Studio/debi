@@ -3,14 +3,10 @@ import "./App.css";
 import PromptInput from "./components/PromptInput";
 import TagList from "./components/Tag";
 import ImageGrid from "./components/ImageCard";
-import {
-  generateTags,
-  generateImages,
-  changeTags,
-} from "./generateService";
+import { generateTags, generateImages, changeTags } from "./generateService";
 
 function App() {
-  const [tags, setTags] = useState(["female", "elder", "informally dressed"]); // initial tags
+  const [tags, setTags] = useState([]); // initial tags
   const [images, setImages] = useState([]); // initial images
   const promptInput = useRef(null);
 
@@ -36,9 +32,21 @@ function App() {
 
   return (
     <div className="App">
-      <PromptInput ref={promptInput} onGenerate={handleGenerate} />
-      <TagList tags={tags} onUpdate={handleUpdate} onTag={handleTagClick} />
-      <ImageGrid images={images} />
+      <table>
+        <tr>
+          <td style={{ width: "40%", verticalAlign: "middle" }}>
+            <PromptInput ref={promptInput} onGenerate={handleGenerate} />
+            <TagList
+              tags={tags}
+              onUpdate={handleUpdate}
+              onTag={handleTagClick}
+            />
+          </td>
+          <td>
+            <ImageGrid images={images} />
+          </td>
+        </tr>
+      </table>
     </div>
   );
 }
