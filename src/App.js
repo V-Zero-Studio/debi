@@ -15,8 +15,10 @@ function App() {
     const newImages = await generateImages(prompt);
     setImages(newImages);
 
-    const newTags = await generateTags(prompt, newImages);
-    setTags(newTags);
+    if (newImages.length > 0) {
+      const newTags = await generateTags(prompt, newImages);
+      setTags(newTags);
+    }
   };
 
   const handleUpdate = (tags) => {
@@ -34,7 +36,7 @@ function App() {
     <div className="App">
       <table>
         <tr>
-          <td style={{ width: "40%", verticalAlign: "middle" }}>
+          <td className="prompt">
             <PromptInput ref={promptInput} onGenerate={handleGenerate} />
             <TagList
               tags={tags}

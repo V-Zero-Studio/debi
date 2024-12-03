@@ -26,12 +26,6 @@ export const generateImages = async (prompt) => {
     return [];
   }
 
-  // return [
-  //   "https://via.placeholder.com/150?text=Image+1",
-  //   "https://via.placeholder.com/150?text=Image+2",
-  //   "https://via.placeholder.com/150?text=Image+3",
-  //   "https://via.placeholder.com/150?text=Image+4",
-  // ];
   return imgUrls;
 };
 
@@ -40,7 +34,7 @@ export const generateImages = async (prompt) => {
 // finally, return a list of suggested attributes as keywords/phases formatted as follows: {keyword/phase, keyword/phase, ... keyword/phase}
 export const generateTags = async (prompt, imgUrls) => {
   const textPrompt = "the prompt that generates these images is \"" + prompt + "\". " +
-    "detect as many as possible attributes that these images have in common (but not specified in the prompt) and, for each common attribute, suggest a different value.\n\n for example: if identifying that all images show 'male' as the gender attribute, you can suggest 'female' or 'non-binary' as a different value, and return JavaScript code of an array [{\"attribute\": \"gender\", \"common\": \"male\", \"suggestion\": [\"female\", \"non-binary\"]}]. only return the JavaScript code. do not include other texts or markdown code like '```javascript'";
+    "detect as many as possible a set of attributes for which all these images have a common value and, for each such attribute, suggest a different value (unless the original value has been specified in the prompt, in which case you should ignore such an attribute).\n\n for example: if identifying that all images show 'male' as the value of the gender attribute, you can suggest 'female' or 'non-binary' as a different value (unless 'male' has been specified in the prompt, in which case you should ignore the gender attribute). do not suggest a value that already appears in at least one of the images. return JavaScript code of an array [{\"attribute\": \"gender\", \"common\": \"male\", \"suggestion\": [\"female\", \"non-binary\"]}]. only return the JavaScript code. do not include other texts or markdown code like '```javascript'";
   const messageContents = [
     {
       type: "text",
@@ -55,6 +49,7 @@ export const generateTags = async (prompt, imgUrls) => {
 
   // console.log(message);
 
+  let result
   try {
     console.log("captioning the generated images ...");
     const response = await openai.chat.completions.create({
@@ -62,7 +57,7 @@ export const generateTags = async (prompt, imgUrls) => {
       messages: messages,
     });
 
-    const result = response.choices[0].message.content;
+    result = response.choices[0].message.content;
     // console.log(result);
     const tagList = JSON.parse(result);
     console.log(tagList);
@@ -72,6 +67,7 @@ export const generateTags = async (prompt, imgUrls) => {
     return tags
   } catch (error) {
     console.error("Error captioning images:", error);
+    console.error(result)
     return [];
   }
 };
