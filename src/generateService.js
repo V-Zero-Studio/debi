@@ -16,7 +16,7 @@ export const generateImages = async (prompt) => {
     console.log("sending image generation request:", prompt);
     const response = await openai.images.generate({
       model: "dall-e-2",
-      prompt: "generate photorealistic, non-cartoon images: " + prompt,
+      prompt: "generate realistic photos: " + prompt,
       n: 4,
       size: "256x256",
     });
