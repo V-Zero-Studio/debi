@@ -16,7 +16,7 @@ export const generateImages = async (prompt) => {
     console.log("sending image generation request:", prompt);
     const response = await openai.images.generate({
       model: "dall-e-2",
-      prompt: "generate photos of: " + prompt,
+      prompt: prompt,
       n: 4,
       size: "256x256",
     });
@@ -34,7 +34,7 @@ export const generateImages = async (prompt) => {
 // finally, return a list of suggested attributes as keywords/phases formatted as follows: {keyword/phase, keyword/phase, ... keyword/phase}
 export const generateTags = async (prompt, imgUrls) => {
   const textPrompt = "the prompt that generates these images is \"" + prompt + "\". " +
-    "detect as many as possible a set of attributes for which all these images' objects or people have a common value and, for each such attribute, suggest a different value (unless the original value has been specified in the prompt, in which case you should ignore such an attribute).\n\n for example: if identifying that all images' people are 'male' as the value of the gender attribute, you can suggest 'female' or 'non-binary' as a different value (unless 'male' has been specified in the prompt, in which case you should ignore the gender attribute). do not suggest a value that already appears in at least one of the images. return JavaScript code of an array [{\"attribute\": \"gender\", \"common\": \"male\", \"suggestion\": [\"gender: female\", \"gender: non-binary\"]}]. only return the JavaScript code. do not include other texts or markdown code like '```javascript'";
+    "detect as many as possible a set of attributes for which all images' objects or people have a common value and, for each such attribute, suggest a different value (unless the original value has been specified in the prompt, in which case you should ignore such an attribute).\n\n for example: if identifying that all images' people are 'male' as the value of the gender attribute, you can suggest 'female' or 'non-binary' as a different value (unless 'male' has been specified in the prompt, in which case you should ignore the gender attribute). return JavaScript code of an array [{\"attribute\": \"gender\", \"common\": \"male\", \"suggestion\": [\"gender: female\", \"gender: non-binary\"]}]. only return the JavaScript code. do not include other texts or markdown code like '```javascript'";
   const messageContents = [
     {
       type: "text",
