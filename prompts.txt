@@ -102,7 +102,7 @@ Below are examples of prompts that might lead to biased images for each type of 
    - Likely to depict male figures unless the prompt specifies otherwise.
 2. "A professional athlete."
    - Might favor male athletes in sports like basketball or football.
-3. "A person in business attire."
+3. "
    - Often defaults to male depictions.
 
 ---
